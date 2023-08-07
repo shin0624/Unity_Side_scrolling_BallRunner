@@ -10,7 +10,7 @@ public class PlayerControl : MonoBehaviour
     public static float JUMP_HEIGHT_MAX = 3.0f;//점프 높이
     public static float JUMP_KEY_RELEASE_REDUCE = 0.5f;//점프 후의 감속도
 
-    public static float LOW_HEIGHT = -5.0f;//문턱값보다 낮은 장소에 플레이어가 존재 시, 즉 구멍에 떨어질 시
+    public static float LOW_HEIGHT = -0.0f;//문턱값보다 낮은 장소에 플레이어가 존재 시, 즉 구멍에 떨어질 시
 
     public float current_speed = 0.0f;//현재 속도
     public LevelControl level_control = null;//LevelControl이 저장됨 --->LevelControl과 연계하기 위한 변수 2개 추가
