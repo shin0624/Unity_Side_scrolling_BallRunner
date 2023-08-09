@@ -10,6 +10,8 @@ public class GameRoot : MonoBehaviour
     private AudioSource audio;
     public AudioClip jumpSound;
 
+    public static string mes_text = "점프 : 마우스 왼쪽 버튼\n 구멍에 빠지면 게임 오버\n 게임이 진행될 수록 속도가 빨라지며 구멍의 크기도 커진다.";
+
     void Start()
     {
         this.player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
@@ -36,6 +38,11 @@ public class GameRoot : MonoBehaviour
         float time;
         time = this.step_timer;
         return (time);//호출한 곳에 경과시간을 알려줌
+    }
+
+    void OnGUI()
+    {
+        GUI.Label(new Rect(Screen.width / 2, 128, 1000, 1000), mes_text);
     }
 
 

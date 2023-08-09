@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
@@ -17,6 +18,10 @@ public class PlayerControl : MonoBehaviour
 
     private float click_timer = -1.0f;//버튼이 눌린 후의 시간
     private float CLICK_GRACE_TIME = 0.5f;//점프하고싶은 의사를 받아들일 시간
+
+    //GUI를 위한 변수 추가
+    private Text JumpScore;
+    private int getCount = 0;
 
     public enum STEP//Player의 각종 상태를 나타내는 자료형
     {
@@ -39,6 +44,8 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         this.next_step = STEP.RUN;//게임을 시작하자마자 달릴 수 있도록
+
+        JumpScore = GameObject.Find("Score").GetComponent<Text>();
     }
 
     private void check_landed()
@@ -67,6 +74,7 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        
         Vector3 velocity = this.GetComponent<Rigidbody>().velocity;//속도 설정
         this.current_speed = this.level_control.getPlayerSpeed();
         this.check_landed();//착지 상태인지 체크
@@ -127,6 +135,7 @@ public class PlayerControl : MonoBehaviour
                     if (this.is_landed)
                     {
                         this.next_step = STEP.RUN;//점프 중 착지 시 다음 상태를 주행으로.
+                        getCount++;
                     }
                     break;
             }
@@ -177,9 +186,10 @@ public class PlayerControl : MonoBehaviour
                         break;
                     }
                     velocity.y *= JUMP_KEY_RELEASE_REDUCE;//버튼이 떨어져있고 상승 중일 때 -->감속 시작. 점프 상승 종료
+                
+                
 
-
-                    this.is_key_released = true;
+                this.is_key_released = true;
                 break;
 
             case STEP.MISS:
@@ -192,7 +202,10 @@ public class PlayerControl : MonoBehaviour
 
                 }
                  this.GetComponent<Rigidbody>().velocity = velocity;//Rigidbody의 속도를 위에서 구한 속도로 갱신
-        }
+
+        SetCountText();
+        
+    }
        
     public bool isPlayEnd()//게임이 끝났는지 판정
     {
@@ -204,6 +217,11 @@ public class PlayerControl : MonoBehaviour
                 break;
         }
         return (ret);
+    }
+
+    void SetCountText()
+    {
+        JumpScore.text = "점프한 횟수 : " + getCount;
     }
 
     }
